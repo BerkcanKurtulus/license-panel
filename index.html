@@ -29,20 +29,23 @@
 
     <script>
       async function send() {
+        const password = document.getElementById("pass").value;
+
         const r = await fetch(
           "https://license-api.a-berkcankurtulus.workers.dev",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + document.getElementById("pass").value,
+              Authorization: "Bearer " + password,
             },
             body: JSON.stringify({
-              hwid: hwid.value,
-              days: +days.value,
+              hwid: document.getElementById("hwid").value,
+              days: Number(document.getElementById("days").value),
             }),
           }
         );
+
         out.textContent = await r.text();
       }
     </script>
