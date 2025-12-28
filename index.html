@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lisans Paneli</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: Arial;
+        background: #111;
+        color: #fff;
+        padding: 20px;
+      }
+      input,
+      button {
+        padding: 10px;
+        margin: 5px;
+        width: 100%;
+      }
+      button {
+        background: #28a745;
+        color: #fff;
+        border: 0;
+      }
+      #panel {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>🔐 Giriş</h2>
+    <div id="login">
+      <input id="user" placeholder="Kullanıcı Adı" />
+      <input id="pass" type="password" placeholder="Şifre" />
+      <button onclick="login()">Giriş</button>
+    </div>
+
+    <div id="panel">
+      <h2>🎣 Lisans Oluştur</h2>
+      <input id="hwid" placeholder="HWID" />
+      <input id="name" placeholder="Ad Soyad" />
+      <input id="days" placeholder="Gün" value="30" />
+      <button onclick="send()">Oluştur</button>
+    </div>
+
+    <script>
+      const API_URL = "WORKER_URL_BURAYA";
+
+      function login() {
+        if (user.value === "admin" && pass.value === "1234") {
+          login.style.display = "none";
+          panel.style.display = "block";
+        } else {
+          alert("Hatalı giriş");
+        }
+      }
+
+      function send() {
+        fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            hwid: hwid.value,
+            name: name.value,
+            days: days.value,
+          }),
+        })
+          .then((r) => r.text())
+          .then(alert);
+      }
+    </script>
+  </body>
+</html>
