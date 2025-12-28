@@ -1,35 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
   <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Lisans Panel</title>
     <style>
       body {
         font-family: sans-serif;
         padding: 20px;
+        max-width: 420px;
+        margin: auto;
+      }
+      h2 {
+        text-align: center;
       }
       input,
       button {
         width: 100%;
         padding: 12px;
         margin: 8px 0;
+        font-size: 16px;
+      }
+      button {
+        background: #2d7cff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+      }
+      pre {
+        background: #f3f3f3;
+        padding: 10px;
+        white-space: pre-wrap;
+        word-break: break-word;
       }
     </style>
   </head>
   <body>
-    <h2>Lisans Oluştur</h2>
+    <h2>🔐 Lisans Oluştur</h2>
 
     <input id="hwid" placeholder="HWID" />
-    <input id="days" type="number" value="30" />
-    <input id="pass" type="password" placeholder="Admin Şifre" />
+    <input id="name" placeholder="Ad Soyad" />
+    <input id="days" type="number" value="30" placeholder="Gün" />
+    <input id="pass" type="password" placeholder="Panel Şifresi" />
 
-    <button onclick="send()">Oluştur</button>
+    <button onclick="send()">Oluştur / Uzat</button>
 
     <pre id="out"></pre>
 
     <script>
       async function send() {
-        const password = document.getElementById("pass").value;
+        out.textContent = "Gönderiliyor...";
 
         const r = await fetch(
           "https://license-api.a-berkcankurtulus.workers.dev",
@@ -37,11 +56,13 @@
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: "Bearer " + password,
+              Authorization: "Bearer " + pass.value,
             },
             body: JSON.stringify({
-              hwid: document.getElementById("hwid").value,
-              days: Number(document.getElementById("days").value),
+              hwid: hwid.value.trim(),
+              name: name.value.trim(),
+              days: Number(days.value),
+              paid: true,
             }),
           }
         );
