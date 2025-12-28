@@ -50,24 +50,28 @@
       async function send() {
         out.textContent = "Gönderiliyor...";
 
-        const r = await fetch(
-          "https://license-api.a-berkcankurtulus.workers.dev",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + pass.value,
-            },
-            body: JSON.stringify({
-              hwid: hwid.value.trim(),
-              name: name.value.trim(),
-              days: Number(days.value),
-              paid: true,
-            }),
-          }
-        );
+        try {
+          const r = await fetch(
+            "https://license-api.a-berkcankurtulus.workers.dev",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + pass.value,
+              },
+              body: JSON.stringify({
+                hwid: hwid.value.trim(),
+                name: name.value.trim(),
+                days: Number(days.value),
+                paid: true,
+              }),
+            }
+          );
 
-        out.textContent = await r.text();
+          out.textContent = "STATUS: " + r.status + "\n\n" + (await r.text());
+        } catch (e) {
+          out.textContent = "HATA: " + e.message;
+        }
       }
     </script>
   </body>
