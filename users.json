@@ -1,1 +1,7 @@
-{}
+{
+  "test": {
+    "name": "test",
+    "expire": 1768209350,
+    "paid": true
+  }
+}
